@@ -23,8 +23,8 @@ public class Membership {
 	public static Membership generateMember(
 		MembershipId membershipId,
 		MembershipName membershipName,
-		MembershipAddress membershipAddress,
 		MembershipEmail membershipEmail,
+		MembershipAddress membershipAddress,
 		MembershipIsValid membershipIsValid,
 		MembershipIsCorp membershipIsCorp
 	) {
