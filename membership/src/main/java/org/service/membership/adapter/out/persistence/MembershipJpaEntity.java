@@ -7,7 +7,6 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -22,15 +21,15 @@ public class MembershipJpaEntity {
 
 	private String name;
 
-	private String address;
-
 	private String email;
+
+	private String address;
 
 	private boolean isValid;
 
 	private boolean isCorp;
 
-	public MembershipJpaEntity(String name, String address, String email, boolean isValid, boolean isCorp) {
+	public MembershipJpaEntity(String name, String email, String address, boolean isValid, boolean isCorp) {
 		this.name = name;
 		this.address = address;
 		this.email = email;
