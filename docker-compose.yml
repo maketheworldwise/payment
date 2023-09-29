@@ -36,5 +36,5 @@ networks:
   payment_network:
     driver: bridge
 
-# 1. create membership image
+# 1. create membership image `./gradlew docker`
 # 2. execyte command `docker-compose up -d`
