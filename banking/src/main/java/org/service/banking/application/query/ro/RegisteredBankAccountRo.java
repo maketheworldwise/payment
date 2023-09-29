@@ -7,10 +7,13 @@ import lombok.Data;
 @Data
 public class RegisteredBankAccountRo {
 	private final String registeredBankAccountId;
+
 	private final String membershipId;
+
 	private final String bankName;
 
 	private final String bankAccountNumber;
+
 	private final boolean isValid;
 
 	public RegisteredBankAccountRo(RegisteredBankAccountJpaEntity entity) {
