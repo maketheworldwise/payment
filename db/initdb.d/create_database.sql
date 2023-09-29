@@ -1,0 +1,2 @@
+CREATE DATABASE payment IF NOT EXISTS;
+USE payment;

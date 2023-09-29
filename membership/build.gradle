@@ -45,7 +45,8 @@ dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
     implementation project(path: ':common')
 
-    runtimeOnly 'com.h2database:h2'
+//    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 }
 
 test {
@@ -55,7 +56,7 @@ test {
 docker {
     println(tasks.bootJar.outputs.files)
     // image name
-    name rootProject.name + "-" + project.version + ":" + version
+    name rootProject.name + '-' + project.name + ':' + project.version
 
     // dockerfile
     dockerfile file('../Dockerfile')
