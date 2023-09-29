@@ -1,4 +1,5 @@
 rootProject.name = 'payment'
-include 'membership'
-include 'common'
 
+include 'common'
+include 'membership'
+include 'banking'

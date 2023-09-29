@@ -2,7 +2,7 @@ package org.service.membership.adapter.in.web;
 
 import org.service.common.WebAdapter;
 import org.service.membership.application.port.in.FindMembershipCommand;
-import org.service.membership.application.service.FindMembershipUsecase;
+import org.service.membership.application.port.in.FindMembershipUsecase;
 import org.service.membership.domain.Membership;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
