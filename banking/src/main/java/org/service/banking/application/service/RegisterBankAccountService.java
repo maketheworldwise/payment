@@ -9,6 +9,7 @@ import org.service.banking.application.port.in.RegisterBankAccountCommand;
 import org.service.banking.application.port.in.RegisterBankAccountUsecase;
 import org.service.banking.application.port.out.RegisteredBankAccountPort;
 import org.service.banking.application.port.out.RequestBankAccountInfoPort;
+import org.service.banking.application.query.ValidateRegisteredBankAccountQuery;
 import org.service.banking.domain.RegisterBankAccount;
 import org.service.common.Usecase;
 
@@ -21,6 +22,8 @@ public class RegisterBankAccountService implements RegisterBankAccountUsecase {
 	private final RequestBankAccountInfoPort requestBankAccountInfoPort;
 
 	private final RegisteredBankAccountPort registeredBankAccountPort;
+
+	private final ValidateRegisteredBankAccountQuery validateRegisteredBankAccountQuery;
 
 	private final RegisteredBankAccountMapper registeredBankAccountMapper;
 
@@ -41,6 +44,8 @@ public class RegisterBankAccountService implements RegisterBankAccountUsecase {
 
 		BankAccount accountInfo = getBankAccount(command);
 
+		isRegisterBankAccountValid(accountInfo);
+
 		RegisteredBankAccountJpaEntity jpaEntity = registeredBankAccountPort.createRegisteredBankAccount(
 			new RegisterBankAccount.MembershipId(command.getMembershipId()),
 			new RegisterBankAccount.BankName(accountInfo.getBankName()),
@@ -49,6 +54,23 @@ public class RegisterBankAccountService implements RegisterBankAccountUsecase {
 		);
 
 		return registeredBankAccountMapper.toDomain(jpaEntity);
+	}
+
+	private void isValidMembershipId() {
+		boolean membershipIsValid = true;
+		if (!membershipIsValid) {
+			throw new RuntimeException("invalid membership id");
+		}
+	}
+
+	private void isRegisterBankAccountValid(BankAccount accountInfo) {
+		boolean isRegisteredBankAccountExists = validateRegisteredBankAccountQuery.isValidRegisteredBankAccount(
+			accountInfo.getBankName(),
+			accountInfo.getBankAccountNumber()
+		);
+		if(isRegisteredBankAccountExists) {
+			throw new RuntimeException("already exists registered bank account");
+		}
 	}
 
 	@NotNull
@@ -61,12 +83,5 @@ public class RegisterBankAccountService implements RegisterBankAccountUsecase {
 			throw new RuntimeException("invalid external bank account");
 		}
 		return accountInfo;
-	}
-
-	private static void isValidMembershipId() {
-		boolean membershipIsValid = true;
-		if (!membershipIsValid) {
-			throw new RuntimeException("invalid membership id");
-		}
 	}
 }

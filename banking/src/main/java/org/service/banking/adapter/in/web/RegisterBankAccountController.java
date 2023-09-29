@@ -4,6 +4,7 @@ import org.service.banking.application.port.in.RegisterBankAccountCommand;
 import org.service.banking.application.port.in.RegisterBankAccountUsecase;
 import org.service.banking.domain.RegisterBankAccount;
 import org.service.common.WebAdapter;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ public class RegisterBankAccountController {
 	private final RegisterBankAccountUsecase registerBankAccountUsecase;
 
 	@PostMapping("banking/account/register")
-	public RegisterBankAccount registerBankAccount(@RequestBody RegisterBankAccountRequest request) {
+	public ResponseEntity<RegisterBankAccount> registerBankAccount(@RequestBody RegisterBankAccountRequest request) {
 
 		RegisterBankAccountCommand command = new RegisterBankAccountCommand(
 			request.getMembershipId(),
@@ -27,6 +28,6 @@ public class RegisterBankAccountController {
 			request.isLinkedStatusIsValid()
 		);
 
-		return registerBankAccountUsecase.registerBankAccount(command);
+		return ResponseEntity.ok(registerBankAccountUsecase.registerBankAccount(command));
 	}
 }
