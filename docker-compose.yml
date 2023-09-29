@@ -32,6 +32,21 @@ services:
         - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
         - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
+  banking:
+    image: payment-banking:0.0.1
+    networks:
+      - payment_network
+    ports:
+      - "8082:8080"
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/payment?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
 networks:
   payment_network:
     driver: bridge
