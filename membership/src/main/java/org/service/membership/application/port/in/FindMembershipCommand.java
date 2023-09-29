@@ -2,7 +2,8 @@ package org.service.membership.application.port.in;
 
 import javax.validation.constraints.NotNull;
 
-import common.SelfValidating;
+import org.service.common.SelfValidating;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

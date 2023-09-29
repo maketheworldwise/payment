@@ -1,4 +1,4 @@
-package common;
+package org.service.common;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

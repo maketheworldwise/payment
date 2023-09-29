@@ -1,12 +1,12 @@
 package org.service.membership.application.service;
 
+import org.service.common.Usecase;
 import org.service.membership.adapter.out.persistence.MembershipJpaEntity;
 import org.service.membership.adapter.out.persistence.MembershipMapper;
 import org.service.membership.application.port.in.FindMembershipCommand;
 import org.service.membership.application.port.out.FindMembershipPort;
 import org.service.membership.domain.Membership;
 
-import common.Usecase;
 import lombok.RequiredArgsConstructor;
 
 @Usecase

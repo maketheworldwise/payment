@@ -1,11 +1,11 @@
 package org.service.membership.adapter.out.persistence;
 
+import org.service.common.PersistenceAdapter;
 import org.service.membership.application.port.out.FindMembershipPort;
 import org.service.membership.application.port.out.ModifyMembershipPort;
 import org.service.membership.application.port.out.RegisterMembershipPort;
 import org.service.membership.domain.Membership;
 
-import common.PersistenceAdapter;
 import lombok.RequiredArgsConstructor;
 
 @PersistenceAdapter

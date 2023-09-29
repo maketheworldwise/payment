@@ -1,4 +1,4 @@
-package common;
+package org.service.common;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface WebAdapter {
+public @interface Usecase {
 
 	@AliasFor(annotation = Component.class)
 	String value() default "";

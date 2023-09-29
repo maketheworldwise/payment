@@ -1,4 +1,4 @@
-package common;
+package org.service.common;
 
 import java.util.Set;
 

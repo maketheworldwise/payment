@@ -1,5 +1,6 @@
 package org.service.membership.adapter.in.web;
 
+import org.service.common.WebAdapter;
 import org.service.membership.application.port.in.RegisterMembershipCommand;
 import org.service.membership.application.port.in.RegisterMembershipUsecase;
 import org.service.membership.domain.Membership;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import common.WebAdapter;
 import lombok.RequiredArgsConstructor;
 
 @WebAdapter

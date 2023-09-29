@@ -2,6 +2,7 @@ package org.service.membership.application.service;
 
 import javax.transaction.Transactional;
 
+import org.service.common.Usecase;
 import org.service.membership.adapter.out.persistence.MembershipJpaEntity;
 import org.service.membership.adapter.out.persistence.MembershipMapper;
 import org.service.membership.application.port.in.RegisterMembershipCommand;
@@ -9,7 +10,6 @@ import org.service.membership.application.port.in.RegisterMembershipUsecase;
 import org.service.membership.application.port.out.RegisterMembershipPort;
 import org.service.membership.domain.Membership;
 
-import common.Usecase;
 import lombok.RequiredArgsConstructor;
 
 @Usecase
