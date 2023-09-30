@@ -28,3 +28,11 @@
 1. check account if money can be withdrawn (assume the account already exists)
 2. withdraw the money to the corporate account
 3. send money from corporate account to real(targeted) bank account
+
+
+## todo: monitoring
+
+- logging: elastic (indexing), fluent (data fetch), kibana (ui)
+- metric: prometheus (timeSeries db), grafana (visualize + alert)
+- tracing: jaeger, zipkin, tempo
+- service mesh: istio (kiali, envoy-proxy)
