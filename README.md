@@ -29,6 +29,23 @@
 2. withdraw the money to the corporate account
 3. send money from corporate account to real(targeted) bank account
 
+## kafka
+
+- without kafka-ui, must execute command to make topic
+
+```shell
+$ cd /opt/bitnami/kafka/bin/kafka-topics.sh
+$ kafka-topics.sh --create
+  --zookeeper <zookeeper:2181>
+  --topic <org.service.logging.out.stdout>
+  --partitions 1
+  --replication-factor 1
+  --config min.insync.replicas=1
+```
+
+- within kafka-ui
+
+![](./docs/images/kafka-ui-topics.png)
 
 ## todo: monitoring
 
