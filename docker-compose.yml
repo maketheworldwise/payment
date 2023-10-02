@@ -112,6 +112,18 @@ services:
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
 
+  logging-consumer:
+    image: payment-logging-consumer:0.0.1
+    networks:
+      - payment_network
+    restart: always
+    depends_on:
+      - kafka
+      - zookeeper
+    environment:
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=org.service.logging.out.stdout
+
 networks:
   payment_network:
     driver: bridge
