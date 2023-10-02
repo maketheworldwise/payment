@@ -7,6 +7,8 @@ import org.service.banking.adapter.out.persistence.RegisteredBankAccountJpaEntit
 import org.service.banking.adapter.out.persistence.RegisteredBankAccountMapper;
 import org.service.banking.application.port.in.RegisterBankAccountCommand;
 import org.service.banking.application.port.in.RegisterBankAccountUsecase;
+import org.service.banking.application.port.out.GetMembershipPort;
+import org.service.banking.application.port.out.MembershipStatus;
 import org.service.banking.application.port.out.RegisteredBankAccountPort;
 import org.service.banking.application.port.out.RequestBankAccountInfoPort;
 import org.service.banking.application.query.ValidateRegisteredBankAccountQuery;
@@ -22,6 +24,8 @@ public class RegisterBankAccountService implements RegisterBankAccountUsecase {
 	private final RequestBankAccountInfoPort requestBankAccountInfoPort;
 
 	private final RegisteredBankAccountPort registeredBankAccountPort;
+
+	private final GetMembershipPort getMembershipPort;
 
 	private final ValidateRegisteredBankAccountQuery validateRegisteredBankAccountQuery;
 
@@ -40,7 +44,7 @@ public class RegisterBankAccountService implements RegisterBankAccountUsecase {
 		  		2-1. if not, throw exception
 		 */
 
-		isValidMembershipId();
+		isValidMembershipId(command.getMembershipId());
 
 		BankAccount accountInfo = getBankAccount(command);
 
@@ -56,9 +60,9 @@ public class RegisterBankAccountService implements RegisterBankAccountUsecase {
 		return registeredBankAccountMapper.toDomain(jpaEntity);
 	}
 
-	private void isValidMembershipId() {
-		boolean membershipIsValid = true;
-		if (!membershipIsValid) {
+	private void isValidMembershipId(String membershipId) {
+		MembershipStatus membershipStatus = getMembershipPort.getMembership(membershipId);
+		if (!membershipStatus.isValid()) {
 			throw new RuntimeException("invalid membership id");
 		}
 	}
