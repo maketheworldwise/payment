@@ -4,4 +4,6 @@ import org.service.money.domain.MoneyChangingRequest;
 
 public interface IncreaseMoneyRequestUsecase {
 	MoneyChangingRequest increaseMoneyRequest(IncreaseMoneyRequestCommand command);
+
+	MoneyChangingRequest increaseMoneyRequestAsync(IncreaseMoneyRequestCommand command);
 }
