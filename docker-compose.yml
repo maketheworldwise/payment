@@ -72,6 +72,26 @@ services:
       - TASK_RESULT_TOPIC=org.service.task.result.topic
       - SERVICE_MEMBERSHIP_URL=http://membership:8080 # container url
 
+  remittance:
+    image: payment-remittance:0.0.1
+    networks:
+      - payment_network
+    ports:
+      - '8084:8080'
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/payment?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - KAFKA_CLUSTERS_BOOTSTRAPSERVERS=kafka:29092
+      - LOGGING_TOPIC=org.service.logging.out.stdout
+      - SERVICE_MEMBERSHIP_URL=http://membership:8080 # container url
+      - SERVICE_BANKING_URL=http://banking:8080 # container url
+      - SERVICE_MONEY_URL=http://money:8080 # container url
+
   zookeeper:
     image: 'arm64v8/zookeeper:3.8'
     networks:
