@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.service.common.CountDownLatchManager;
 import org.service.common.RechargingMoneyTask;
 import org.service.common.SubTask;
 import org.service.common.Usecase;
+import org.service.money.adapter.axon.command.IncreaseMemberMoneyCommand;
 import org.service.money.adapter.out.persistence.MemberMoneyJpaEntity;
 import org.service.money.adapter.out.persistence.MoneyChangingRequestJpaEntity;
 import org.service.money.adapter.out.persistence.MoneyChangingRequestMapper;
 import org.service.money.application.port.in.IncreaseMoneyRequestCommand;
 import org.service.money.application.port.in.IncreaseMoneyRequestUsecase;
+import org.service.money.application.port.out.GetMemberMoneyPort;
 import org.service.money.application.port.out.GetMembershipPort;
 import org.service.money.application.port.out.MembershipStatus;
 import org.service.money.application.port.out.MoneyChangingRequestPort;
@@ -35,6 +38,9 @@ public class IncreaseMoneyRequestService implements IncreaseMoneyRequestUsecase 
 	private final SendRechargingMoneyTaskPort sendRechargingMoneyTaskPort;
 
 	private final CountDownLatchManager countDownLatchManager;
+
+	private final GetMemberMoneyPort getMemberMoneyPort;
+	private final CommandGateway commandGateway;
 
 	@Override
 	public MoneyChangingRequest increaseMoneyRequest(IncreaseMoneyRequestCommand command) {
@@ -178,5 +184,30 @@ public class IncreaseMoneyRequestService implements IncreaseMoneyRequestUsecase 
 		}
 
 		return moneyChangingRequestMapper.toDomain(jpaEntity);
+	}
+
+	@Override
+	public void increaseMoneyChangingRequestByEvent(IncreaseMoneyRequestCommand command) {
+		MemberMoneyJpaEntity memberMoneyJpaEntity = getMemberMoneyPort.getMemberMoney(
+			new MemberMoney.MembershipId(command.getTargetMembershipId())
+		);
+		commandGateway.send(IncreaseMemberMoneyCommand.builder()
+			.aggregateIdentifier(memberMoneyJpaEntity.getAggregateIdentifier())
+			.membershipId(command.getTargetMembershipId())
+			.amount(command.getAmount())
+			.build()
+		).whenComplete((result, throwable) -> {
+			// after event sourcing handler is executed
+			if (throwable != null) {
+				System.out.println(throwable.getMessage());
+				throw new RuntimeException(throwable);
+			}
+
+			System.out.println(result.toString());
+			moneyChangingRequestPort.increaseMemberMoney(
+				new MemberMoney.MembershipId(command.getTargetMembershipId()),
+				command.getAmount()
+			);
+		});
 	}
 }
