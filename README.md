@@ -53,3 +53,8 @@ $ kafka-topics.sh --create
 - metric: prometheus (timeSeries db), grafana (visualize + alert)
 - tracing: jaeger, zipkin, tempo
 - service mesh: istio (kiali, envoy-proxy)
+
+## todo: eventuate
+
+- eventuate local: platform which helps implement  event sourcing
+- eventuate tram: platform which helps implement saga, cqrs
