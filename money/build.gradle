@@ -10,6 +10,10 @@ plugins {
     id 'com.palantir.docker' version '0.35.0'
 }
 
+ext {
+    axonVersion = "4.6.0"
+}
+
 compileJava {
     sourceCompatibility = '11'
     targetCompatibility = '11'
@@ -49,6 +53,9 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java:8.0.28'
 
     implementation 'org.springframework.kafka:spring-kafka'
+
+    implementation group: 'org.axonframework', name: 'axon-configuration', version: "$axonVersion"
+    implementation group: 'org.axonframework', name: 'axon-spring-boot-starter', version: "$axonVersion"
 }
 
 test {

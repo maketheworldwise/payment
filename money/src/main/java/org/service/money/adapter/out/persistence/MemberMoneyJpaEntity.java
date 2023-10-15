@@ -26,20 +26,15 @@ public class MemberMoneyJpaEntity {
 
 	private int balance;
 
+	private String aggregateIdentifier;
+
 	public MemberMoneyJpaEntity(
 		String membershipId,
-		int balance
+		int balance,
+		String aggregateIdentifier
 	) {
 		this.membershipId = membershipId;
 		this.balance = balance;
-	}
-
-	@Override
-	public String toString() {
-		return "MemberMoneyJpaEntity{" +
-			"memberMoneyId=" + memberMoneyId +
-			", membershipId='" + membershipId + '\'' +
-			", balance=" + balance +
-			'}';
+		this.aggregateIdentifier = aggregateIdentifier;
 	}
 }

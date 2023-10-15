@@ -50,7 +50,7 @@ public class MoneyChangingRequestPersistenceAdapter
 	) {
 		MemberMoneyJpaEntity jpaEntity = memberMoneyRequestRepository
 			.findByMembershipId(membershipId.getMembershipId())
-			.orElse(new MemberMoneyJpaEntity(membershipId.getMembershipId(), 0));
+			.orElse(new MemberMoneyJpaEntity(membershipId.getMembershipId(), 0, ""));
 
 		jpaEntity.setBalance(jpaEntity.getBalance() + increaseMoneyAmount);
 

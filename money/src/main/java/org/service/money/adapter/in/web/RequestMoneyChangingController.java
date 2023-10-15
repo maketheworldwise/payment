@@ -1,6 +1,8 @@
 package org.service.money.adapter.in.web;
 
 import org.service.common.WebAdapter;
+import org.service.money.application.port.in.CreateMemberMoneyCommand;
+import org.service.money.application.port.in.CreateMemberMoneyUsecase;
 import org.service.money.application.port.in.IncreaseMoneyRequestCommand;
 import org.service.money.application.port.in.IncreaseMoneyRequestUsecase;
 import org.service.money.domain.MoneyChangingRequest;
@@ -21,6 +23,8 @@ public class RequestMoneyChangingController {
 	// private final DecreaseMoneyRequestUsecase decreaseMoneyRequestUsecase;
 
 	private final MoneyChangingResultDetailMapper moneyChangingResultDetailMapper;
+
+	private final CreateMemberMoneyUsecase createMemberMoneyUsecase;
 
 	@PostMapping(path = "/money/increase/request")
 	public ResponseEntity<MoneyChangingResultDetail> increaseMoneyRequest(
@@ -61,5 +65,12 @@ public class RequestMoneyChangingController {
 	//
 	// 	return ResponseEntity.ok(moneyChangingResultDetailMapper.toDetail(moneyChangingRequest));
 	// }
+
+	@PostMapping(path = "/money/create-member-money")
+	void createMemberMoney(@RequestBody CreateMemberMoneyRequest request) {
+		createMemberMoneyUsecase.createMemberMoney(CreateMemberMoneyCommand.builder()
+			.membershipId(request.getTargetMembershipId())
+			.build());
+	}
 
 }

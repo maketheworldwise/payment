@@ -71,6 +71,10 @@ services:
       - TASK_TOPIC=org.service.task.topic
       - TASK_RESULT_TOPIC=org.service.task.result.topic
       - SERVICE_MEMBERSHIP_URL=http://membership:8080 # container url
+      - AXON_AXONSERVER_SERVERS=axon-server:8124
+      - AXON_SERIALIZER_EVENTS=jackson
+      - AXON_SERIALIZER_MESSAGES=jackson
+      - AXON_SERIALIZER_GENERAL=xstream
 
   remittance:
     image: payment-remittance:0.0.1
@@ -161,6 +165,39 @@ services:
       - LOGGING_TOPIC=org.service.logging.out.stdout
       - TASK_TOPIC=org.service.task.topic
       - TASK_RESULT_TOPIC=org.service.task.result.topic
+
+  axon-server:
+    container_name: axon-server
+    image: axoniq/axonserver:4.6.3-jdk-11-dev
+    networks:
+      - payment_network
+    ports:
+      - '8024:8024'
+      - '8124:8124'
+    volumes:
+      - axonserver-data:/axonserver/data
+      - axonserver-events:/axonserver/events
+      - axonserver-config:/axonserver/config:ro
+
+volumes:
+  axonserver-data:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${PWD}/axon-server-se/data
+  axonserver-events:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${PWD}/axon-server-se/events
+  axonserver-config:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ${PWD}/axon-server-se/config
 
 networks:
   payment_network:
