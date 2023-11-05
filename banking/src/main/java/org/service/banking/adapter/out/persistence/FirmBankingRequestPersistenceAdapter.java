@@ -21,7 +21,8 @@ public class FirmBankingRequestPersistenceAdapter implements RequestFirmBankingP
 		FirmBankingRequest.ToBankName toBankName,
 		FirmBankingRequest.ToBankAccountNumber toBankAccountNumber,
 		FirmBankingRequest.MoneyAmount moneyAmount,
-		FirmBankingRequest.FirmBankingStatus firmBankingStatus
+		FirmBankingRequest.FirmBankingStatus firmBankingStatus,
+		FirmBankingRequest.AggregateIdentifier aggregateIdentifier
 	) {
 		return firmBankingRequestRepository.save(
 			new FirmBankingRequestJpaEntity(
@@ -31,7 +32,8 @@ public class FirmBankingRequestPersistenceAdapter implements RequestFirmBankingP
 				toBankAccountNumber.getToBankAccountNumber(),
 				moneyAmount.getMoneyAmount(),
 				firmBankingStatus.getFirmBankingStatus(),
-				UUID.randomUUID()
+				UUID.randomUUID(),
+				aggregateIdentifier.getAggregateIdentifier()
 			)
 		);
 	}
@@ -39,5 +41,14 @@ public class FirmBankingRequestPersistenceAdapter implements RequestFirmBankingP
 	@Override
 	public FirmBankingRequestJpaEntity modifyRequestFirmBanking(FirmBankingRequestJpaEntity jpaEntity) {
 		return firmBankingRequestRepository.save(jpaEntity);
+	}
+
+	@Override
+	public FirmBankingRequestJpaEntity getFirmBankingRequest(
+		FirmBankingRequest.AggregateIdentifier aggregateIdentifier
+	) {
+		return firmBankingRequestRepository.findByAggregateIdentifier(
+			aggregateIdentifier.getAggregateIdentifier()
+		).orElseThrow(() -> new RuntimeException("FirmBankingRequest not found"));
 	}
 }

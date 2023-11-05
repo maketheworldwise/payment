@@ -4,4 +4,6 @@ import org.service.banking.domain.FirmBankingRequest;
 
 public interface RequestFirmBankingUsecase {
 	FirmBankingRequest requestFirmBanking(RequestFirmBankingCommand command);
+
+	void requestFirmBankingByEvent(RequestFirmBankingCommand command);
 }
